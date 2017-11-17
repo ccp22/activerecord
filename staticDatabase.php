@@ -98,12 +98,26 @@ class model {
         
         $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
-        $params = array('owneremail'=>$this->owneremail,
+        
+        if(get_called_class() == 'todo') {
+        	$params = array('owneremail'=>$this->owneremail,
             			'ownerid'=>$this->ownerid,
             			'createddate'=>$this->createddate,
             			'duedate'=>$this->duedate,
             			'message'=>$this->message, 
             			'isdone'=>$this->isdone);
+        	
+        }else {
+        	$params = array('email'=>$this->email,
+            			'fname'=>$this->fname,
+            			'lname'=>$this->lname,
+            			'phone'=>$this->phone,
+            			'birthday'=>$this->birthday, 
+            			'gender'=>$this->gender,
+            			'password'=>$this->password);
+        }
+        
+        
         $statement->execute($params);
         //echo "INSERT INTO ".$this->tableName." (" . $columnString . ") VALUES (" . $valueString . ")</br>";
         echo 'Record successfully saved with id: ' . $this->id .'<br>';

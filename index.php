@@ -194,7 +194,27 @@
 			}
 			echo "</tbody></table><hr>";
 			
-			
+			$id = 1;
+			$record = accounts::findOne($id);
+			echo '<h2>Select One Record</h2>';
+			echo '<p>Select Record ID: '.$id.'</p>';
+			echo "<table class=\"table table-hover\">";
+			echo "<thead class=\"thead-dark\">
+					<tr>
+						<th>User ID</th>
+						<th>Email</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+					</tr>
+				</thead>";
+			echo "<tbody>
+					<tr>
+						<td>".$record->id."</td>
+						<td>".$record->email."</td>
+						<td>".$record->fname."</td>
+						<td>".$record->lname."</td>
+					</tr>";
+			echo "</tbody></table><hr>";
 			
 		?>
 	</body>

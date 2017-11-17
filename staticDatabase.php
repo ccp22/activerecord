@@ -2,12 +2,14 @@
 
 
 //turn on debugging messages
+
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
-define('DATABASE', 'kwilliam');
-define('USERNAME', 'kwilliam');
-define('PASSWORD', 'ma9euXF1H');
-define('CONNECTION', 'sql2.njit.edu');
+define('DATABASE', 'ccp22');
+define('USERNAME', 'ccp22');
+define('PASSWORD', 'BxTEeds4U');
+define('CONNECTION', 'sql1.njit.edu');
+
 class dbConn{
     //variable to hold connection object.
     protected static $db;
@@ -34,11 +36,14 @@ class dbConn{
         return self::$db;
     }
 }
+
 class collection {
     static public function create() {
       $model = new static::$modelName;
       return $model;
     }
+    
+    //A function to select all the records from the table.
     static public function findAll() {
         $db = dbConn::getConnection();
         $tableName = get_called_class();
@@ -50,6 +55,8 @@ class collection {
         $recordsSet =  $statement->fetchAll();
         return $recordsSet;
     }
+    
+    //A function to select specific record from the table.
     static public function findOne($id) {
         $db = dbConn::getConnection();
         $tableName = get_called_class();
@@ -62,12 +69,15 @@ class collection {
         return $recordsSet[0];
     }
 }
+
 class accounts extends collection {
     protected static $modelName = 'account';
 }
+
 class todos extends collection {
     protected static $modelName = 'todo';
 }
+
 class model {
     protected $tableName;
     public function save()

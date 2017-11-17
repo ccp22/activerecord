@@ -10,7 +10,7 @@
 		<?php
 			include 'staticDatabase.php';
 			
-
+			echo '<h1>ToDos</h1>';
 			echo '<h2>Select all Records</h2>';
 			echo '<p>Select ALL records</p>';
 			$records = todos::findAll();
@@ -167,6 +167,35 @@
 				}
 			}
 			echo '</table><br><hr>';
+			
+			echo '<h1>Accounts</h1>';
+			echo '<h2>Select all Records</h2>';
+			echo '<p>Select ALL records</p>';
+			$records = accounts::findAll();
+			echo "<table class=\"table table-hover\">";
+			if (count($records) > 0) {
+				echo "<thead class=\"thead-dark\">
+						<tr>
+							<th>User ID</th>
+							<th>Email</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+						</tr>
+					</thead>";
+				echo '<tbody>';
+				foreach ($records as $row) {
+					echo "<tr>
+							<td>".$row->id."</td>
+							<td>".$row->email."</td>
+							<td>".$row->fname."</td>
+							<td>".$row->lname."</td>
+						</tr>";
+				}
+			}
+			echo "</tbody></table><hr>";
+			
+			
+			
 		?>
 	</body>
 </html>

@@ -117,7 +117,6 @@ class model {
             			'password'=>$this->password);
         }
         
-        
         $statement->execute($params);
         //echo "INSERT INTO ".$this->tableName." (" . $columnString . ") VALUES (" . $valueString . ")</br>";
         echo 'Record successfully saved with id: ' . $this->id .'<br>';
@@ -128,7 +127,8 @@ class model {
         return $sql;
     }
     private function update() {
-        $sql = 'UPDATE '.$this->tableName.' 
+    	if(get_called_class() == 'todo') {
+    		$sql = 'UPDATE '.$this->tableName.' 
         		SET owneremail=:owneremail,
         			ownerid=:ownerid,
         			createddate=:createddate,
@@ -136,7 +136,18 @@ class model {
         			message=:message,
         			isdone=:isdone
         		WHERE id='.$this->id;
-    
+    	}else {
+    		$sql = 'UPDATE '.$this->tableName.' 
+        		SET email=:email,
+        			fname=:fname,
+        			lname=:lname,
+        			phone=:phone,
+        			birthday=:birthday,
+        			gender=:gender,
+        			password=:password
+        		WHERE id='.$this->id;
+    	}
+    	
         echo 'Record successfully updated with id: ' . $this->id .'<br>';
         return $sql;
     }

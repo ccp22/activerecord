@@ -218,7 +218,7 @@
 			
 			echo '<h2>Insert New Record</h2>';
 			$account = new account();
-			$account->setData('','demo@gmail.com','Demo','Demo','999-888-2244','2000-09-30','','test123');
+			$account->setData('100','demo@gmail.com','Demo','Demo','999-888-2244','2000-09-30','','test123');
 			$account->save();
 			echo '<p>New Record data: ID = '.$account->id.', Name = '.$account->fname.' '.$account->lname.'</p>';
 			echo "<table class=\"table table-hover\">";

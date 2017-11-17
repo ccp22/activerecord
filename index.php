@@ -216,6 +216,33 @@
 					</tr>";
 			echo "</tbody></table><hr>";
 			
+			echo '<h2>Insert New Record</h2>';
+			$account = new account();
+			$account->setData('','demo@gmail.com','Demo','Demo','999-888-2244','2000-09-30','','test123');
+			$account->save();
+			echo '<p>New Record data: ID = '.$account->id.', Name = '.$account->fname.' '.$account->lname.'</p>';
+			echo "<table class=\"table table-hover\">";
+			$records = accounts::findAll();
+			if (count($records) > 0) {
+				echo "<thead class=\"thead-dark\">
+					<tr>
+						<th>User ID</th>
+						<th>Email</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+					</tr>
+				</thead>";
+				foreach ($records as $row) {
+					echo "<tr>
+							<td>".$row->id."</td>
+							<td>".$row->email."</td>
+							<td>".$row->fname."</td>
+							<td>".$row->lname."</td>
+						</tr>";
+				}
+			}
+			echo '</table><br><hr>';
+			
 		?>
 	</body>
 </html>

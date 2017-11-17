@@ -73,7 +73,7 @@
 			
 			echo '<h2>Insert New Record</h2>';
 			$todo = new todo();
-			$todo->setData('','mjlee@njit.edu',1,'2017-11-15 12:34:45','2017-11-25 12:34:45','Test ToDo',0);
+			$todo->setData('','mjlee@njit.edu',1,'2017-10-25 10:14:45','2017-11-25 10:14:45','Test ToDo',0);
 			$todo->save();
 			echo '<p>New Record data: Title = '.$todo->message.', Status = '.$todo->isdone.'</p>';
 			echo "<table class=\"table table-hover\">";
@@ -104,7 +104,38 @@
 			}
 			echo '</table><br><hr>';
 		
-			
+			echo '<h2>Update Existing Record</h2>';
+			$todo2 = new todo();
+			$todo2->setData(8,'mjlee@njit.edu',1,'2017-11-20 02:14:45','2017-11-30 02:14:45','Test ToDo Updated',0);
+			$todo2->save();
+		
+			echo "<table class=\"table table-hover\">";
+			$records2 = todos::findAll();
+			if (count($records2) > 0) {
+				echo "<thead class=\"thead-dark\">
+					<tr>
+						<th>TODO ID</th>
+						<th>Owner Email</th>
+						<th>Owner ID</th>
+						<th>Created Date</th>
+						<th>Due Date</th>
+						<th>Message</th>
+						<th>Status</th>
+					</tr>
+				</thead>";
+				foreach ($records2 as $row) {
+					echo "<tr>
+							<td>".$row->id."</td>
+							<td>".$row->owneremail."</td>
+							<td>".$row->ownerid."</td>
+							<td>".$row->createddate."</td>
+							<td>".$row->duedate."</td>
+							<td>".$row->message."</td>
+							<td>".$row->isdone."</td>
+						</tr>";
+				}
+			}
+			echo '</table><br><hr>';
 			
 		?>
 	</body>

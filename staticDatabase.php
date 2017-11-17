@@ -80,38 +80,91 @@ class todos extends collection {
 
 class model {
     protected $tableName;
+    
     public function save()
     {
-        if ($this->id = '') {
-            $sql = $this->insert();
+        $array = get_object_vars($this);
+        $tempId = $array['id'];
+        array_pop($array);
+        array_shift($array);
+        $columnString = implode(',', array_keys($array));
+        $valueString = ":".implode(',:', array_keys($array));
+        
+        if ($this->id == '') {
+            $sql = $this->insert($columnString, $valueString);
         } else {
             $sql = $this->update();
         }
+        
         $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
-        $statement->execute();
-        $tableName = get_called_class();
-        $array = get_object_vars($this);
-        $columnString = implode(',', $array);
-        $valueString = ":".implode(',:', $array);
-       // echo "INSERT INTO $tableName (" . $columnString . ") VALUES (" . $valueString . ")</br>";
-        echo 'I just saved record: ' . $this->id;
+        $params = array('owneremail'=>$this->owneremail,
+            			'ownerid'=>$this->ownerid,
+            			'createddate'=>$this->createddate,
+            			'duedate'=>$this->duedate,
+            			'message'=>$this->message, 
+            			'isdone'=>$this->isdone);
+        $statement->execute($params);
+        //echo "INSERT INTO ".$this->tableName." (" . $columnString . ") VALUES (" . $valueString . ")</br>";
+        echo 'Record successfully saved with id: ' . $this->id .'<br>';
     }
-    private function insert() {
-        $sql = 'sometthing';
+    private function insert($columnString, $valueString) {
+        $sql = "INSERT INTO ".$this->tableName." (" . $columnString . ") 
+        		VALUES (" . $valueString . ")";
         return $sql;
     }
     private function update() {
-        $sql = 'sometthing';
+        $sql = 'UPDATE '.$this->tableName.' 
+        		SET owneremail=:owneremail,
+        			ownerid=:ownerid,
+        			createddate=:createddate,
+        			duedate=:duedate,
+        			message=:message,
+        			isdone=:isdone
+        		WHERE id='.$this->id;
+    
+        echo 'Record successfully updated with id: ' . $this->id .'<br>';
         return $sql;
-        echo 'I just updated record' . $this->id;
     }
     public function delete() {
-        echo 'I just deleted record' . $this->id;
+        if($this->id != '') {
+        	$db = dbConn::getConnection();
+    		$sql = 'DELETE FROM '.$this->tableName.' WHERE id='.$this->id;
+    		$stmt = $db->prepare($sql);
+    		$stmt->execute();
+        	echo 'Record successfully deleted with id: ' . $this->id .'<br>';
+        }else {
+        	echo 'Record ID is not valid! Cannot delete the record.';
+        }
     }
 }
+
 class account extends model {
+	public $id;
+    public $email;
+    public $fname;
+    public $lname;
+    public $phone;
+    public $birthday;
+    public $gender;
+    public $password;
+    
+    public function setData($id, $email, $fname, $lname, $phone, $birthday, $gender, $password) {
+    	$this->id = $id;
+    	$this->email = $email;
+    	$this->fname = $fname;
+    	$this->lname = $lname;
+    	$this->phone = $phone;
+    	$this->birthday = $birthday;
+    	$this->gender = $gender;
+    	$this->password = $password;
+    }
+    
+    public function __construct() {
+        $this->tableName = 'accounts';
+    }	
 }
+
 class todo extends model {
     public $id;
     public $owneremail;
@@ -120,29 +173,20 @@ class todo extends model {
     public $duedate;
     public $message;
     public $isdone;
-    public function __construct()
-    {
+    
+    public function setData($id, $owneremail, $ownerid, $createddate, $duedate, $message, $isdone) {
+    	$this->id = $id;
+    	$this->owneremail = $owneremail;
+    	$this->ownerid = $ownerid;
+    	$this->createddate = $createddate;
+    	$this->duedate = $duedate;
+    	$this->message = $message;
+    	$this->isdone = $isdone;
+    }
+    
+    public function __construct() {
         $this->tableName = 'todos';
-	
     }
 }
-// this would be the method to put in the index page for accounts
-$records = accounts::findAll();
-//print_r($records);
-// this would be the method to put in the index page for todos
-$records = todos::findAll();
-//print_r($records);
-//this code is used to get one record and is used for showing one record or updating one record
-$record = todos::findOne(1);
-//print_r($record);
-//this is used to save the record or update it (if you know how to make update work and insert)
-// $record->save();
-//$record = accounts::findOne(1);
-//This is how you would save a new todo item
-$record = new todo();
-$record->message = 'some task';
-$record->isdone = 0;
-//$record->save();
-print_r($record);
-$record = todos::create();
-print_r($record);
+
+?>

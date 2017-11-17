@@ -243,6 +243,33 @@
 			}
 			echo '</table><br><hr>';
 			
+			echo '<h2>Update Existing Record</h2>';
+			$account2 = new account();
+			$account2->setData(13,'demo@njit.edu','Steve','Jobs','999-888-2244','2000-09-30','','test123');
+			$account2->save();
+		
+			echo "<table class=\"table table-hover\">";
+			$records2 = accounts::findAll();
+			if (count($records2) > 0) {
+				echo "<thead class=\"thead-dark\">
+					<tr>
+						<th>User ID</th>
+						<th>Email</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+					</tr>
+				</thead>";
+				foreach ($records2 as $row) {
+					echo "<tr>
+							<td>".$row->id."</td>
+							<td>".$row->email."</td>
+							<td>".$row->fname."</td>
+							<td>".$row->lname."</td>
+						</tr>";
+				}
+			}
+			echo '</table><br><hr>';
+			
 		?>
 	</body>
 </html>

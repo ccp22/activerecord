@@ -71,11 +71,11 @@
 					</tr>";
 			echo "</tbody></table><hr>";
 			
-			echo '<h2>Insert New Record</h2>';
-			$todo = new todo();
-			$todo->setData('100','mjlee@njit.edu',1,'2017-10-25 10:14:45','2017-11-25 10:14:45','Test ToDo',0);
-			$todo->save();
-			echo '<p>New Record data: Title = '.$todo->message.', Status = '.$todo->isdone.'</p>';
+			$todoDel = new todo();
+			$todoDel->id = 7;
+			echo '<h2>Delete Existing Record</h2>';
+			$todoDel->delete();
+			echo '<p>Deleted Record data id: '.$todoDel->id.'</p>';
 			echo "<table class=\"table table-hover\">";
 			$records = todos::findAll();
 			if (count($records) > 0) {
@@ -103,11 +103,12 @@
 				}
 			}
 			echo '</table><br><hr>';
-		
+			
+			
 			echo '<h2>Update Existing Record</h2>';
-			$todo2 = new todo();
-			$todo2->setData(8,'mjlee@njit.edu',1,'2017-11-20 02:14:45','2017-11-30 02:14:45','Test ToDo Updated',0);
-			$todo2->save();
+			$todoUpdate = new todo();
+			$todoUpdate->setData(5,'mjlee@njit.edu',1,'2017-11-20 02:14:45','2017-11-30 02:14:45','Test ToDo Updated',0);
+			$todoUpdate->save();
 		
 			echo "<table class=\"table table-hover\">";
 			$records2 = todos::findAll();
@@ -137,9 +138,11 @@
 			}
 			echo '</table><br><hr>';
 			
-			echo '<h2>Delete Existing Record</h2>';
-			$todo2->delete();
-			echo '<p>Deleted Record data id: '.$todo2->id.'</p>';
+			echo '<h2>Insert New Record</h2>';
+			$todoInsert = new todo();
+			$todoInsert->setData('','mjlee@njit.edu',1,'2017-10-25 10:14:45','2017-11-25 10:14:45','Test ToDo Added',0);
+			$todoInsert->save();
+			echo '<p>New Record data: Title = '.$todoInsert->message.', Status = '.$todoInsert->isdone.'</p>';
 			echo "<table class=\"table table-hover\">";
 			$records = todos::findAll();
 			if (count($records) > 0) {
@@ -180,6 +183,7 @@
 							<th>Email</th>
 							<th>First Name</th>
 							<th>Last Name</th>
+							<th>Birthday</th>
 						</tr>
 					</thead>";
 				echo '<tbody>';
@@ -189,6 +193,7 @@
 							<td>".$row->email."</td>
 							<td>".$row->fname."</td>
 							<td>".$row->lname."</td>
+							<td>".$row->birthday."</td>
 						</tr>";
 				}
 			}
@@ -205,6 +210,7 @@
 						<th>Email</th>
 						<th>First Name</th>
 						<th>Last Name</th>
+						<th>Birthday</th>
 					</tr>
 				</thead>";
 			echo "<tbody>
@@ -213,14 +219,15 @@
 						<td>".$record->email."</td>
 						<td>".$record->fname."</td>
 						<td>".$record->lname."</td>
+						<td>".$record->birthday."</td>
 					</tr>";
 			echo "</tbody></table><hr>";
 			
-			echo '<h2>Insert New Record</h2>';
-			$account = new account();
-			$account->setData('100','demo@gmail.com','Demo','Demo','999-888-2244','2000-09-30','','test123');
-			$account->save();
-			echo '<p>New Record data: ID = '.$account->id.', Name = '.$account->fname.' '.$account->lname.'</p>';
+			echo '<h2>Delete Existing Record</h2>';
+			$accDelete = new account();
+			$accDelete->id = 9;
+			$accDelete->delete();
+			echo '<p>Deleted Record data id: '.$accDelete->id.'</p>';
 			echo "<table class=\"table table-hover\">";
 			$records = accounts::findAll();
 			if (count($records) > 0) {
@@ -230,6 +237,7 @@
 						<th>Email</th>
 						<th>First Name</th>
 						<th>Last Name</th>
+						<th>Birthday</th>
 					</tr>
 				</thead>";
 				foreach ($records as $row) {
@@ -238,6 +246,7 @@
 							<td>".$row->email."</td>
 							<td>".$row->fname."</td>
 							<td>".$row->lname."</td>
+							<td>".$record->birthday."</td>
 						</tr>";
 				}
 			}
@@ -245,7 +254,7 @@
 			
 			echo '<h2>Update Existing Record</h2>';
 			$account2 = new account();
-			$account2->setData(13,'demo@njit.edu','Steve','Jobs','999-888-2244','2000-09-30','','test123');
+			$account2->setData(11,'demo@njit.edu','Steve','Jobs','999-888-2244','2000-09-30','','test123');
 			$account2->save();
 		
 			echo "<table class=\"table table-hover\">";
@@ -257,6 +266,7 @@
 						<th>Email</th>
 						<th>First Name</th>
 						<th>Last Name</th>
+						<th>Birthday</th>
 					</tr>
 				</thead>";
 				foreach ($records2 as $row) {
@@ -265,14 +275,17 @@
 							<td>".$row->email."</td>
 							<td>".$row->fname."</td>
 							<td>".$row->lname."</td>
+							<td>".$row->birthday."</td>
 						</tr>";
 				}
 			}
 			echo '</table><br><hr>';
 			
-			echo '<h2>Delete Existing Record</h2>';
-			$account2->delete();
-			echo '<p>Deleted Record data id: '.$account2->id.'</p>';
+			echo '<h2>Insert New Record</h2>';
+			$accInsert = new account();
+			$accInsert->setData('','demo@gmail.com','Peter','Parker','999-888-2244','2000-09-30','','test123');
+			$accInsert->save();
+			echo '<p>New Record data: Name = '.$accInsert->fname.' '.$accInsert->lname.'</p>';
 			echo "<table class=\"table table-hover\">";
 			$records = accounts::findAll();
 			if (count($records) > 0) {
@@ -282,6 +295,7 @@
 						<th>Email</th>
 						<th>First Name</th>
 						<th>Last Name</th>
+						<th>Birthday</th>
 					</tr>
 				</thead>";
 				foreach ($records as $row) {
@@ -290,6 +304,7 @@
 							<td>".$row->email."</td>
 							<td>".$row->fname."</td>
 							<td>".$row->lname."</td>
+							<td>".$row->birthday."</td>
 						</tr>";
 				}
 			}

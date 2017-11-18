@@ -119,7 +119,7 @@ class model {
         
         $statement->execute($params);
         //echo "INSERT INTO ".$this->tableName." (" . $columnString . ") VALUES (" . $valueString . ")</br>";
-        echo 'Record successfully saved with id: ' . $this->id .'<br>';
+        echo 'Record successfully saved.<br>';
     }
     private function insert($columnString, $valueString) {
         $sql = "INSERT INTO ".$this->tableName." (" . $columnString . ") 
